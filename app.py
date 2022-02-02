@@ -9,9 +9,13 @@ def home_page(): # run this function.
     <html>
      <body>
       <h1> Home Page </h1>
-      <p> Welcome to my simple App! </p>
-      <a href='/hello'> Go to the <b>Hello Page!</b> </a> | 
-      <a href='/goodbye'> Go to the <b>Goodbye Page!</b> </a>
+      <p> Welcome to my Simple App! </p>
+     <a href='/hello'> Go to the Hello Page!</a> <br>
+      <a href='/goodbye'> Go to the <b>Goodbye Page!</b> </a><br>
+      <a href='/search'> Go to the Search Page </a><br>
+      <a href='/add-comment'> Add a Comment  </a> <br>
+      <a href='/r/<subreddit>'> Go to the subreddit page </a><br>
+      <a href='/posts/<int:id>'> Go to the Post Page </a><br>
      </body
     </html> 
     """    
@@ -85,3 +89,26 @@ def save_comment():
           <li>Comment: {comment}</li>
         <ul>  
         """
+        
+        
+@app.route('/r/<subreddit>') # whatever the variable that is passed in, needs a matching param in the view function 
+def show_subreddit(subreddit):  #pass in param that matches the variable
+  return f"<h1>Browsing The {subreddit} Subreddit </h1>"
+
+POSTS = {
+   1: "I like buffalo wings", 
+   2: "Sammie is the cutest dog!", 
+   3: "Coffee is my favorite drink", 
+   4: "Pepperoni & Pineapple Pizza pleases my palate"
+ }
+
+# @app.route('/posts/<id>')
+# def find_post(id):
+#   post = POSTS[id]
+#   return f"<p>{post}</p>"  # returns a string.  we need to retrieve an int.  
+
+@app.route('/posts/<int:id>')  # int: specifies and integer as a variable type for 'id' otherwise it will default to a string.  
+def find_post(id):
+  post = POSTS.get(id, "POST NOT FOUND!")  # POST.get() will search for the id and if it does not find it, "POST NOT FOUND will be returned."
+  return f"<p>{post}</p>"
+
