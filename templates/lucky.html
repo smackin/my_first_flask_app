@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Lucky Number</title>
+</head>
+<body>
+    <h1> Your Lucky Number is: {{lucky_num}} </h1> 
+    <!-- <p> {{msg}} </p> -->
+    
+    {% if lucky_num == 3 %}
+        <h2>  YOU HAVE THE RIGHT LUCKY NUMBER!  </h2>
+        <img 
+        src="https://media0.giphy.com/media/yaYV8i5n1OjZe/giphy.gif" alt="">
+    {%else%} 
+        <h2> Sorry, That's not the magic number! </h2>   
+        <img
+        src="https://eternity.nactum.net/ahahahyoudidntsaythemagicword.jpg" alt="">
+    {%endif %}
+
+
+
+</body>
+</html>

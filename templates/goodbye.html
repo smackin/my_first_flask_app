@@ -1,0 +1,9 @@
+{%extends 'hello.html'%}{%block title%}Greeter V2{%endblock%} {%block content%}
+<h1>Greeter Form V2</h1>
+<form action="/greet-2">
+  <input type="text" placeholder="your name" name="username" />
+  <label for="compliments">Would you like compliments?</label>
+  <input type="checkbox" id="compliments" name="wants_compliments" />
+  <button>Submit</button>
+</form>
+{%endblock%}

@@ -1,40 +1,61 @@
-from flask import Flask, request
+from flask import Flask,render_template,request
+from random import randint, choice, sample
+from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__) 
 
+app.config['SECRET_KEY'] = "sammie"
+debug = DebugToolbarExtension(app)
 
 @app.route('/') # when a request is sent to /( This is the home page).
 def home_page(): # run this function. 
-    html ="""
-    <html>
-     <body>
-      <h1> Home Page </h1>
-      <p> Welcome to my Simple App! </p>
-     <a href='/hello'> Go to the Hello Page!</a> <br>
-      <a href='/goodbye'> Go to the <b>Goodbye Page!</b> </a><br>
-      <a href='/search'> Go to the Search Page </a><br>
-      <a href='/add-comment'> Add a Comment  </a> <br>
-      <a href='/r/<subreddit>'> Go to the subreddit page </a><br>
-      <a href='/posts/<int:id>'> Go to the Post Page </a><br>
-     </body
-    </html> 
-    """    
-    return html
+  """ Displays home page with links to all routes """   
+  return render_template("hello.html")
        
 #This is a decorator
 @app.route('/hello') # when a request is sent to /hello..  
 def say_hello(): # run this function. 
-    html = """
-    <html>
-     <body>
-       <h1> Hello! </h1>
-       <p> This is the Hello Page </p>
-        <a href='/'> Go to the Home Page  </a> | 
-      <a href='/goodbye'> Go to the <b>Goodbye Page!</b> </a>
-     </body>
-    </html>   
-    """ 
-    return html
+    """Shows Hello Page """
+    return render_template("hello.html")  
+  # Forms 
+@app.route('/form')
+def show_form():
+  """shows form"""
+  return render_template('form.html')
+
+@app.route('/form-2')
+def show_form_2():
+  """shows form-2 """
+  return render_template('form2.html')
+
+# Greetings 
+COMPLIMENTS = ["cute", "silly", "stinky", "playful", "hungry", "happy"]
+
+@app.route('/greet')
+def greeter(): 
+  """Returns username with a compliment from COMPLIMENTS list"""
+  username = request.args['username']
+  adj = choice(COMPLIMENTS)
+  return render_template('greet.html', username=username, compliments = adj)
+
+@app.route('/greet-2')
+def greeter2():
+  """ Selects 3 compliments if the user selects the checkbox"""
+  username = request.args['username']
+  wants = request.args.get('wants_compliments')
+  nice_things = sample(COMPLIMENTS,3)
+  return render_template('greet2.html', username=username, wants_compliments= wants, compliments= nice_things)
+
+@app.route('/spell/<word>')
+def spell_word(word):
+  caps_word = word.upper()
+  return render_template('spell_word.html', word=caps_word)
+
+  
+@app.route('/lucky')
+def lucky_number():
+  num = randint(1, 10)
+  return render_template('lucky.html', lucky_num = num, msg= " You are SO Lucky!!!")    
 
 @app.route('/goodbye')
 def say_bye():
